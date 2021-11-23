@@ -1,0 +1,206 @@
+\chapter{Recommender Systems}
+\section{Given Features To Learn Parameters}
+\begin{table}[H]
+    \caption{Movie ratings}
+    \centering
+    \begin{tabular}{lcccc}
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Movie                & Alice & Bob & Carol & Dave \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Love at last         & 5     & 5   & 0     & 0    \\ 
+        Romance forever      & 5     & ?   & ?     & 0    \\ 
+        Cute puppies of love & ?     & 4   & 0     & ?    \\ 
+        Nonstop car chases   & 0     & 0   & 5     & 4    \\ 
+        Swords vs. karate    & 0     & 0   & 5     & ?    \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \end{tabular}
+\end{table} 
+
+
+\begin{table}[H]
+    \caption{Movie features}
+    \centering
+    \begin{tabular}{lcccc}
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Movie                & romance & action \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Love at last         & 0.90    & 0.00   \\ 
+        Romance forever      & 1.00    & 0.01   \\ 
+        Cute puppies of love & 0.99    & 0.00   \\ 
+        Nonstop car chases   & 0.10    & 1.00   \\ 
+        Swords vs. karate    & 0.00    & 0.90   \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \end{tabular}
+\end{table} 
+
+
+\begin{table}[H]
+    \caption{User preference}
+    \centering
+    \begin{tabular}{lcccc}
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Movie       & Alice & Bob & Carol & Dave \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        romance     & ?     & ?   & ?     & ?    \\ 
+        action      & ?     & ?   & ?     & ?    \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \end{tabular}
+\end{table} 
+
+
+Define
+\begin{equation}
+    \mathbf{Y} = \left[\begin{array}{cccc} 5 & 5 & 0 & 0 \\ 5 &   &   & 0 \\   & 4 & 0 &   \\ 0 & 0 & 5 & 4 \\ 0 & 0 & 5 &   \\ \end{array}\right], 
+    \mathbf{R} = \left[\begin{array}{cccc} 1 & 1 & 1 & 1 \\ 1 & 0 & 0 & 1 \\ 0 & 1 & 1 & 0 \\ 1 & 1 & 1 & 1 \\ 1 & 1 & 1 & 0 \\ \end{array}\right], 
+    \mathbf{X} = \left[\begin{array}{ccc} 1 & 0.9 & 0.0 \\ 1 & 1.0 & 0.01 \\ 1 & 0.99 & 0.0 \\ 1 & 0.1 & 1.0 \\ 1 & 0.0 & 0.9 \\ \end{array}\right],
+    \mathbf{\Theta} = \left[\begin{array}{cccc} 0 & 0 & 0 & 0 \\ ? & ? & ? & ? \\ ? & ? & ? & ? \\ \end{array}\right]
+\end{equation}
+
+
+Optimize $\theta^{(1)}, \dots, \theta^{(q)}$
+\begin{equation}
+    \min_{\theta^{(1)}, \dots, \theta^{(q)}} \frac{1}{2}\sum_{j=1}^{q}\sum_{i:r_{ij}=1}\left(x^{(i)}\theta^{(j)} - y_{ij}\right)^2 + \frac{\lambda}{2}\sum_{j=1}^{q} \left\|\theta^{(j)}\right\|^2
+\end{equation}
+
+
+Where
+\begin{equation}
+    \begin{array}{ll}
+        p            &= \text{the number of movies}\\
+        q            &= \text{the number of users} \\
+        \theta^{(j)} &= \text{column vector for $\mathbf{\Theta}$}\\
+        x^{(i)}      &= \text{row vector for $\mathbf{X}$}\\
+    \end{array}
+\end{equation}
+
+
+\section{Given Parameters To Learn Features}
+\begin{table}[H]
+    \caption{Movie ratings}
+    \centering
+    \begin{tabular}{lcccc}
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Movie                & Alice & Bob & Carol & Dave \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Love at last         & 5     & 5   & 0     & 0    \\ 
+        Romance forever      & 5     & ?   & ?     & 0    \\ 
+        Cute puppies of love & ?     & 4   & 0     & ?    \\ 
+        Nonstop car chases   & 0     & 0   & 5     & 4    \\ 
+        Swords vs. karate    & 0     & 0   & 5     & ?    \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \end{tabular}
+\end{table} 
+
+
+\begin{table}[H]
+    \caption{Movie features}
+    \centering
+    \begin{tabular}{lcccc}
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Movie                & romance & action \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Love at last         & ?    & ?   \\ 
+        Romance forever      & ?    & ?   \\ 
+        Cute puppies of love & ?    & ?   \\ 
+        Nonstop car chases   & ?    & ?   \\ 
+        Swords vs. karate    & ?    & ?   \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \end{tabular}
+\end{table} 
+
+
+\begin{table}[H]
+    \caption{User preference}
+    \centering
+    \begin{tabular}{lcccc}
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        Movie       & Alice & Bob & Carol & Dave \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        romance     & 5     & 5   & 0     & 0    \\ 
+        action      & 0     & 0   & 5     & 5    \\ 
+        \hline %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \end{tabular}
+\end{table} 
+
+
+Define
+\begin{equation}
+    \mathbf{Y} = \left[\begin{array}{cccc} 5 & 5 & 0 & 0 \\ 5 &   &   & 0 \\   & 4 & 0 &   \\ 0 & 0 & 5 & 4 \\ 0 & 0 & 5 &  \\ \end{array}\right], 
+    \mathbf{R} = \left[\begin{array}{cccc} 1 & 1 & 1 & 1 \\ 1 & 0 & 0 & 1 \\ 0 & 1 & 1 & 0 \\ 1 & 1 & 1 & 1 \\ 1 & 1 & 1 & 0 \\ \end{array}\right], 
+    \mathbf{X} = \left[\begin{array}{ccc} 1 & ? & ? \\ 1 & ? & ? \\ 1 & ? & ? \\ 1 & ? & ? \\ 1 & ? & ? \\ \end{array}\right],
+    \mathbf{\Theta} = \left[\begin{array}{cccc} 0 & 0 & 0 & 0 \\ 5 & 5 & 0 & 0 \\ 0 & 0 & 5 & 5 \\ \end{array}\right]
+\end{equation}
+
+
+Optimize $x^{(1)}, \dots, x^{(p)}$
+\begin{equation}
+    \min_{x^{(1)}, \dots, x^{(p)}} \frac{1}{2}\sum_{i=1}^{p}\sum_{j:r_{ij}=1}\left(x^{(i)} \theta^{(j)} - y_{ij}\right)^2 + \frac{\lambda}{2}\sum_{i=1}^{p} \left\|x^{(i)}\right\|^2
+\end{equation}
+
+
+Where
+\begin{equation}
+    \begin{array}{ll}
+        p            &= \text{the number of movies}\\
+        q            &= \text{the number of users} \\
+        \theta^{(j)} &= \text{column vector for $\mathbf{\Theta}$}\\
+        x^{(i)}      &= \text{row vector for $\mathbf{X}$}\\
+    \end{array}
+\end{equation}
+
+
+\section{Collaborative Filtering Algorithm}
+Optimize $\theta^{(1)}, \dots, \theta^{(q)}$ and $x^{(1)}, \dots, x^{(p)}$ simultaneously
+\begin{enumerate}
+    \item Initialize $\theta^{(1)}, \dots, \theta^{(q)}$ and $x^{(1)}, \dots, x^{(p)}$ to small random values
+    \item Compute cost function
+    \begin{equation}
+        J = \frac{1}{2}\sum_{(i,j):r_{ij}=1}\left(x^{(i)} \theta^{(j)} - y_{ij}\right)^2 + \frac{\lambda}{2}\sum_{j=1}^{q} \left\|\theta^{(j)}\right\|^2 + \frac{\lambda}{2}\sum_{i=1}^{p} \left\|x^{(i)}\right\|^2
+    \end{equation}
+
+    \item Minimize cost using gradient descent method
+    \begin{equation}
+        \begin{aligned}
+            x_k^{(i)}      &\coloneqq x_k^{(i)}      - \alpha \left[\sum_{j:r_{ij}=1}\left(x^{(i)} \theta^{(j)} - y_{ij}\right)\theta_k^{(j)} + \lambda x_k^{(i)}     \right]\\
+            \theta_k^{(j)} &\coloneqq \theta_k^{(j)} - \alpha \left[\sum_{i:r_{ij}=1}\left(x^{(i)} \theta^{(j)} - y_{ij}\right)x_k^{(i)}      + \lambda\theta_k^{(j)} \right]\\
+        \end{aligned}
+    \end{equation}
+
+    \item Predict star rating of $\mathbf{X}\mathbf{\Theta}$
+
+\end{enumerate}
+
+
+\section{Applications}
+\begin{itemize}
+    \item Finding related movies
+    \begin{itemize}
+        \item For each product $i$, its feature vector $x^{(i)} \in \mathbb{R}^n$.
+        As $\left\|x^{(i)} - x^{(j)}\right\|$ decrease, the similarity between product $i$ and $j$ is increase.
+    \end{itemize}
+
+    \item Recommendation for new users
+    \begin{equation}
+        \mathbf{Y}   = \left[\begin{array}{cccc} 5 & 5 & 0 & 0 \\ 5 &   &   & 0 \\   & 4 & 0 &   \\ 0 & 0 & 5 & 4 \\ 0 & 0 & 5 &  \\ \end{array}\right], 
+        \mathbf{\mu} = \left[\begin{array}{c} 2.5 \\ 2.5 \\ 2.0 \\ 2.25 \\ 1.25 \\ \end{array}\right], 
+    \end{equation}
+    
+    Assume the rating by a new user Eve is $\mu$, so the new rating matrix would be
+    \begin{equation}
+        \mathbf{Y}   = \left[\begin{array}{ccccc} 5 & 5 & 0 & 0 & 2.5 \\ 5 &   &   & 0 & 2.5 \\   & 4 & 0 &  & 2.0 \\ 0 & 0 & 5 & 4 & 2.25\\ 0 & 0 & 5 & & 1.25 \\ \end{array}\right]
+    \end{equation}
+    
+    If mean normalization is a pre-processing step for collaborative filtering
+    \begin{equation}
+        \bar{\mathbf{Y}} = \mathbf{Y} - \mu = \left[\begin{array}{ccccc} 2.5 & 2.5 & -2.5 & -2.5 & 0\\ 2.5 &   &   & -2.5 & 0\\   & 2.0 & -2.0 &  & 0 \\ -2.25 & -2.25 & 2.75 & 1.75  & 0\\ -1.25 & -1.25 & 3.75 &  & 0 \\ \end{array}\right]
+    \end{equation}
+
+    Because the values at the last column of $\bar{\mathbf{Y}}$ are all zeros, it means 
+    \begin{equation}
+        \theta^{(5)} = \left[\begin{array}{c} 0 \\ 0 \\ 0 \\\end{array}\right]
+    \end{equation}
+    That implied the preferences of a new user would be neutral.
+
+\end{itemize}
+
+

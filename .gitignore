@@ -1,0 +1,7 @@
+materials
+notes/*.aux
+notes/*.log
+notes/*.out
+notes/*.toc
+notes/*.gz
+notes/images/*.pptx
